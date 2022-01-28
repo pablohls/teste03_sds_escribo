@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermoji/fluttermojiCustomizer.dart';
+import 'package:provider/provider.dart';
 import 'package:teste03_sds_escribo/home/widgets/appbar/app_bar_widget.dart';
+import 'package:teste03_sds_escribo/repositorios/personagens_filmes_repositorio.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -9,11 +12,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late FilmesPersonagens filmesPersonagens;
   @override
   Widget build(BuildContext context) {
+    filmesPersonagens = Provider.of<FilmesPersonagens>(context);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBarWidget(),
+        appBar: AppBarWidget(filmesPersonagens),
         body: SizedBox(
           width: double.maxFinite,
           //width: 100,
@@ -21,15 +26,6 @@ class _HomePageState extends State<HomePage> {
           //height: 500,
           child: Column(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  BotoesOpcoes(texto: "Filmes", funcao: () {}),
-                  BotoesOpcoes(texto: "Personagens", funcao: () {}),
-                  BotoesOpcoes(texto: "Favoritos", funcao: () {}),
-                ],
-              ),
               ListView(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -38,28 +34,12 @@ class _HomePageState extends State<HomePage> {
                   Text('Os Ultimos Jedi'),
                   Text('Rogue One Uma historia Star Wars'),
                 ],
-              )
+              ),
+              //Expanded(child: FluttermojiCustomizer()),
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-class BotoesOpcoes extends StatelessWidget {
-  final String texto;
-  final Function() funcao;
-  const BotoesOpcoes({
-    Key? key,
-    required this.texto,
-    required this.funcao,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        width: 120,
-        child: ElevatedButton(onPressed: funcao, child: Text(texto)));
   }
 }

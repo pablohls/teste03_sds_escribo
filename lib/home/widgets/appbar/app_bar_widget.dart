@@ -1,44 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermoji/fluttermoji.dart';
+import 'package:teste03_sds_escribo/repositorios/personagens_filmes_repositorio.dart';
+import 'botoes_opcoes_widget.dart';
 
 class AppBarWidget extends PreferredSize {
-  //final UserModel user;
-  AppBarWidget({Key? key})
+  //FilmesPersonagens filmesPersonagens = FilmesPersonagens();
+  final FilmesPersonagens filmesPersonagens;
+
+  AppBarWidget(this.filmesPersonagens, {Key? key})
       : super(
           key: key,
-          preferredSize: const Size.fromHeight(120),
-          child: SizedBox(
-            height: 250,
-            child: Stack(
-              children: [
-                Container(
-                  height: 161,
-                  width: double.maxFinite,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: const BoxDecoration(color: Colors.blueAccent),
-                  child: Row(
+          preferredSize: const Size.fromHeight(170),
+          child: Stack(
+            children: [
+              Container(
+                width: double.maxFinite,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: const BoxDecoration(color: Colors.blueAccent),
+                child: Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                filmesPersonagens.FilmesPersonagensRepository();
+                              },
+                              child: const Text("Site Oficial"),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.red)),
+                          SizedBox(
+                            width: 120,
+                            height: 120,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: FluttermojiCircleAvatar(
+                                radius: 100,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.transparent,
+                                  shadowColor: Colors.black,
+                                  elevation: 30,
+                                  shape: const CircleBorder()),
+                            ),
+                          )
+                        ]),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ElevatedButton(
-                            onPressed: () {},
-                            child: Text("Site Oficial"),
-                            style:
-                                ElevatedButton.styleFrom(primary: Colors.red)),
-                        Container(
-                          width: 58,
-                          height: 58,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.black
-                              // image: DecorationImage(
-                              //   image: NetworkImage(user.photoUrl),
-                              // ),
-                              ),
-                        )
-                      ]),
+                        BotoesOpcoes(texto: "Filmes", funcao: () {}),
+                        BotoesOpcoes(texto: "Personagens", funcao: () {}),
+                        BotoesOpcoes(texto: "Favoritos", funcao: () {}),
+                      ],
+                    ),
+                  ],
                 ),
-                //Align(alignment: Alignment(0.0, 1.0), child: null)
-              ],
-            ),
+              ),
+            ],
           ),
         );
 }
