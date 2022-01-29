@@ -1,23 +1,20 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FilmesPersonagens extends ChangeNotifier {
-  List<dynamic> _filmes = [];
-  List<dynamic> _personagens = [];
+  List<dynamic> filmes = [];
+  List<dynamic> personagens = [];
+  List<dynamic> favoritos = [];
+  List<dynamic> listaSelecionada = [];
 
-  List<dynamic> get filmes => this._filmes;
-
-  set filmes(List<dynamic> value) => this._filmes = value;
-
-  List<dynamic> get personagens => this._personagens;
-
-  set personagens(List<dynamic> value) => this._personagens = value;
-
-  FilmesPersonagensRepository() {
-    //_setupFilmes();
-    _setupPersonagens();
+  filmesPersonagensRepository() async {
+    print("Iniciando...");
+    await _setupFilmes();
+    await _setupPersonagens();
+    print("Finalizado!");
   }
 
   _setupFilmes() async {
@@ -26,13 +23,12 @@ class FilmesPersonagens extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      final List<dynamic> filmes = json['results'];
-      for (var filmes in filmes) {
-        _filmes.add(filmes['title']);
+      final List<dynamic> lista = json['results'];
+      for (var lista in lista) {
+        filmes.add(lista['title']);
       }
-    } else {
-      //print(response.statusCode.toString());
-    }
+    } else {}
+    notifyListeners();
   }
 
   _setupPersonagens() async {
@@ -41,13 +37,30 @@ class FilmesPersonagens extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      final List<dynamic> personagens = json['results'];
-      for (var personagens in personagens) {
-        _personagens.add(personagens['name']);
+      final List<dynamic> lista = json['results'];
+      for (var lista in lista) {
+        personagens.add(lista['name']);
       }
-      //print(_personagens);
-    } else {
-      //print(response.statusCode.toString());
+    } else {}
+    notifyListeners();
+  }
+
+  void selecionarLista(String categoria) {
+    switch (categoria) {
+      case "Filmes":
+        listaSelecionada = filmes;
+        notifyListeners();
+        break;
+      case "Personagens":
+        listaSelecionada = personagens;
+        notifyListeners();
+        break;
+      case "Favoritos":
+        listaSelecionada = favoritos;
+        notifyListeners();
+        break;
+      default:
+        notifyListeners();
     }
   }
 }

@@ -4,7 +4,6 @@ import 'package:teste03_sds_escribo/repositorios/personagens_filmes_repositorio.
 import 'botoes_opcoes_widget.dart';
 
 class AppBarWidget extends PreferredSize {
-  //FilmesPersonagens filmesPersonagens = FilmesPersonagens();
   final FilmesPersonagens filmesPersonagens;
 
   AppBarWidget(this.filmesPersonagens, {Key? key})
@@ -24,7 +23,7 @@ class AppBarWidget extends PreferredSize {
                         children: [
                           ElevatedButton(
                               onPressed: () {
-                                filmesPersonagens.FilmesPersonagensRepository();
+                                filmesPersonagens.filmesPersonagensRepository();
                               },
                               child: const Text("Site Oficial"),
                               style: ElevatedButton.styleFrom(
@@ -47,10 +46,16 @@ class AppBarWidget extends PreferredSize {
                         ]),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BotoesOpcoes(texto: "Filmes", funcao: () {}),
-                        BotoesOpcoes(texto: "Personagens", funcao: () {}),
-                        BotoesOpcoes(texto: "Favoritos", funcao: () {}),
+                      children: const [
+                        BotoesOpcoes(
+                          texto: "Filmes",
+                        ),
+                        BotoesOpcoes(
+                          texto: "Personagens",
+                        ),
+                        BotoesOpcoes(
+                          texto: "Favoritos",
+                        ),
                       ],
                     ),
                   ],
