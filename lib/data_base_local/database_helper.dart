@@ -1,37 +1,48 @@
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
-class DataBaseHelper {
-  DataBaseHelper._();
+class DatabaseHelper {
+  DatabaseHelper._privateContructor();
 
-  static final DataBaseHelper instace = DataBaseHelper._();
+  static final DatabaseHelper instance = DatabaseHelper._privateContructor();
 
   static Database? _database;
+  Future<Database> get database async => _database ??= await _initDatabase();
 
-  get database async {
-    if (_database != null) return _database;
-
-    _database = await _initDatabase();
-    return _database;
+  Future<Database> _initDatabase() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, 'favoritos.db');
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
-  _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'favoritos.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
+  Future _onCreate(Database db, int version) async {
+    await db.execute('''
+    CREATE TABLE favoritos(
+      id INTEGER PRIMARY KEY,
+      name TEXT
+    )
+    ''');
+  }
+
+  //Future<List<dynamic>>
+  getFavoritos() async {
+    Database db = await instance.database;
+    var favoritos = await db.query(
+      'favoritos',
+      columns: ['name'],
     );
+    //final json = jsonDecode(favoritos.);
+    //List<dynamic> favoritosList = favoritos.isNotEmpty ? favoritos : [];
+    print(favoritos);
+    //return favoritosList;
   }
 
-  _onCreate(db, version) async {
-    await db.execute(_favoritos);
+  Future<int> add(String favorito) async {
+    Database db = await instance.database;
+    return await db.insert('favoritos', {'name': favorito});
   }
-
-  String get _favoritos => '''
-    CREATE TABLE favoritos (
-      titulo TEXT NOT NULL
-    );
-  ''';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermoji/fluttermoji.dart';
 import 'package:teste03_sds_escribo/edicao_avatar/edicao_avatar.dart';
+import 'package:teste03_sds_escribo/home/home_page.dart';
 import 'package:teste03_sds_escribo/inAppBrowser_page/in_app_browser_page.dart';
 import 'package:teste03_sds_escribo/repositorios/filmes_personagens_repositorio.dart';
 import 'botoes_opcoes_widget.dart';
@@ -28,9 +29,14 @@ class AppBarWidget extends PreferredSize {
                               onPressed: () {
                                 if (context.widget.toString() ==
                                     "InAppBrowserPage") {
-                                  Navigator.pop(context);
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomePage(),
+                                    ),
+                                  );
                                 } else {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
@@ -49,9 +55,14 @@ class AppBarWidget extends PreferredSize {
                               onPressed: () {
                                 if (context.widget.toString() ==
                                     "EdicaoAvatar") {
-                                  Navigator.pop(context);
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomePage(),
+                                    ),
+                                  );
                                 } else {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => EdicaoAvatar(),
@@ -70,20 +81,22 @@ class AppBarWidget extends PreferredSize {
                             ),
                           )
                         ]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        BotoesOpcoes(
-                          texto: "Filmes",
-                        ),
-                        BotoesOpcoes(
-                          texto: "Personagens",
-                        ),
-                        BotoesOpcoes(
-                          texto: "Favoritos",
-                        ),
-                      ],
-                    ),
+                    (filmesPersonagens == null)
+                        ? Container()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              BotoesOpcoes(
+                                texto: "Filmes",
+                              ),
+                              BotoesOpcoes(
+                                texto: "Personagens",
+                              ),
+                              BotoesOpcoes(
+                                texto: "Favoritos",
+                              ),
+                            ],
+                          )
                   ],
                 ),
               ),

@@ -17,11 +17,11 @@ class FilmesPersonagens extends ChangeNotifier {
   //late Database db;
 
   filmesPersonagensRepository() async {
-    print("Iniciando...");
+    //print("Iniciando...");
     await _setupFilmes();
     await _setupPersonagens();
-    //await _setupFavoritos();
-    print("Finalizado!");
+    await _setupFavoritos();
+    //print("Finalizado!");
   }
 
   teste() async {
@@ -55,16 +55,8 @@ class FilmesPersonagens extends ChangeNotifier {
   }
 
   _setupFavoritos() async {
-    // final dbHelper = DataBaseHelper.instace;
-
-    // //print(dbHelper.database);
-    // dbHelper
-
-    // // Map<String, dynamic> row = {
-    // //   DatabaseHelper.columnNome: 'Macoratti',
-    // // };
-    // // final id = await dbHelper.insert(row);
-    // // print('linha inserida id: $id');
+    print(DatabaseHelper.instance.getFavoritos());
+    //favoritos = await DatabaseHelper.instance.getFavoritos();
   }
 
   void selecionarLista(String categoria) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teste03_sds_escribo/data_base_local/database_helper.dart';
 import 'package:teste03_sds_escribo/repositorios/filmes_personagens_repositorio.dart';
 
 class ListCards extends StatelessWidget {
@@ -15,7 +16,7 @@ class ListCards extends StatelessWidget {
     var dados = Provider.of<FilmesPersonagens>(context);
     return Card(
       elevation: 5,
-      color: Colors.redAccent,
+      color: cor(dados, title),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,7 +34,7 @@ class ListCards extends StatelessWidget {
           ),
           Material(
             //elevation: 10,
-            color: Colors.redAccent,
+            color: cor(dados, title),
             shape: const CircleBorder(),
             child: InkWell(
               borderRadius: BorderRadius.circular(15),
@@ -41,9 +42,11 @@ class ListCards extends StatelessWidget {
               onTap: () {
                 if (!dados.favoritos.contains(title)) {
                   dados.favoritos.add(title);
+                  DatabaseHelper.instance.add(title);
                   dados.notifyListeners();
                 } else {
                   (dados.favoritos.remove(title));
+                  DatabaseHelper.instance.add(title);
                   dados.notifyListeners();
                 }
               },
@@ -66,5 +69,13 @@ Icon icone(FilmesPersonagens dados, String title) {
     return const Icon(
       Icons.favorite_border,
     );
+  }
+}
+
+Color cor(FilmesPersonagens listas, String title) {
+  if (listas.filmes.contains(title)) {
+    return Colors.red;
+  } else {
+    return Colors.green;
   }
 }
