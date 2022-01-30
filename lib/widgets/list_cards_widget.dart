@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:teste03_sds_escribo/repositorios/personagens_filmes_repositorio.dart';
+import 'package:teste03_sds_escribo/repositorios/filmes_personagens_repositorio.dart';
 
 class ListCards extends StatelessWidget {
   const ListCards({
