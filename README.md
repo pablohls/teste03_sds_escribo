@@ -46,6 +46,8 @@ e dessa forma concluo o desenvolvimento infelizmente sem concluir todas as taref
 Sobre a refatoração, consegui separar e organizar algumas partes do código mas também me faltou tempo
 para a melhor refatoração do mesmo.
 
-Por fim, como foi solicitado um apk para testes no repositorio do git, o mesmo se encontra no seguinte caminho:
-build\app\outputs\flutter-apk
+Por fim, como foi solicitado um apk para testes no repositorio do git, o mesmo se encontra na raiz do repositorio
+com o titulo de:
+
+app-release.apk
 
